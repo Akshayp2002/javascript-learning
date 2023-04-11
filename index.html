@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="populate"> populate</button>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>name</th>
+                <th>username</th>
+                <th>email</th>
+            </tr>
+        </thead>
+        <tbody id="result_area">
+            <tr>
+                
+            </tr>
+
+        </tbody>
+    </table>
+    
+    <script>
+
+       var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://jsonplaceholder.typicode.com/users");
+       
+        // xhr.send();
+
+
+        document.getElementById("populate").addEventListener("click",function(){
+            // alert("clicked")
+            xhr.send()
+        })
+        xhr.onreadystatechange = function(){
+            // console.log(xhr.readyState);
+            if(xhr.readyState == 4){
+
+                if(xhr.status == 200){
+                    // console.log('Success')
+                    // alert(xhr.responseText);
+                    var result_data = JSON.parse(xhr.responseText) // converts to js object
+                    // console.log(result_data);
+                    var html_content = "";
+                    for(i=0;i<=result_data.length;i++){
+                        var current_record = result_data[i];
+                        // console.log(current_record)
+                        html_content = html_content+"<tr><td>"+current_record.id+" </td><td>"+current_record.name+"</td><td>"+current_record.username+" </td><td> "+current_record.email+"</td></tr>";
+                        document.getElementById('result_area').innerHTML = html_content;
+                    }
+                    
+                
+                }else{
+                    console.log('error')
+                }
+                // console.log("status received"); 
+            }
+        }
+        // alert("welcome");
+
+
+    </script>
+</body>
+</html>
